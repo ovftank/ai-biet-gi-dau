@@ -1,5 +1,10 @@
+import 'reflect-metadata';
 import AuthService from './services/authService.js';
+import DataStore from './database/dataStore.js';
 async function main() {
+    const dataStore = new DataStore();
+    await dataStore.connect();
+    await dataStore.close();
     const authService = new AuthService();
     await authService.initBrowser();
     const result = await authService.checkAuth('', '');
