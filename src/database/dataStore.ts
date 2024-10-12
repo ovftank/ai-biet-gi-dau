@@ -166,7 +166,7 @@ export class DataStore {
 
     async getAllData(): Promise<DataType[]> {
         const data = await Data.find();
-        return data.map((d) => d.getData());
+        return data.map((data) => data.getData());
     }
 
     async deleteData(id: number): Promise<void> {

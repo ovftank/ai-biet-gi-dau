@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import DataStore from '../database/dataStore.js';
+import DataStore from '../../database/dataStore.js';
 
 interface TelegramResponse {
     ok: boolean;

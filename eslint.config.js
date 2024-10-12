@@ -1,17 +1,17 @@
-import js from '@eslint/js';
-import tsPlugin from '@typescript-eslint/eslint-plugin';
-import tsParser from '@typescript-eslint/parser';
-import importPlugin from 'eslint-plugin-import';
+import eslint from '@eslint/js';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
 
-export default [
+export default tseslint.config(
+    eslint.configs.recommended,
+    ...tseslint.configs.recommended,
     {
-        ignores: ['dist/**/*'],
-    },
-    js.configs.recommended,
-    {
-        files: ['**/*.ts', '**/*.tsx'],
+        files: ['**/*.ts'],
         languageOptions: {
-            parser: tsParser,
+            globals: {
+                ...globals.browser,
+            },
+            parser: tseslint.parser,
             parserOptions: {
                 ecmaVersion: 'latest',
                 sourceType: 'module',
@@ -19,23 +19,17 @@ export default [
             },
         },
         plugins: {
-            '@typescript-eslint': tsPlugin,
-            import: importPlugin,
+            '@typescript-eslint': tseslint.plugin,
         },
         rules: {
-            ...tsPlugin.configs['recommended-requiring-type-checking'].rules,
-            ...importPlugin.configs.recommended.rules,
-            'import/order': [
+            '@typescript-eslint/no-unused-vars': [
                 'error',
-                {
-                    groups: [['builtin', 'external', 'internal']],
-                    'newlines-between': 'always',
-                },
+                { argsIgnorePattern: '^_' },
             ],
-            '@typescript-eslint/n o-explicit-any': 'off',
-            'no-undef': 'off',
-            'import/no-unresolved': 'off',
-            '@typescript-eslint/no-unsafe-declaration-merging': 'off',
+            'no-console': 'off',
         },
     },
-];
+    {
+        ignores: ['dist/**', 'node_modules/**'],
+    },
+);
